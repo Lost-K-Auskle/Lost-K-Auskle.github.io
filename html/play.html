@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>live2d demo</title>
+	<link rel="shortcut icon" href="https://iamyukino.github.io/index/wp-content/global/images/favicon.png" type="image/png">
+	<!-- このWebサイトでコピーできます。以下は同じです。 -->
+	<link rel="stylesheet" type="text/css" href="https://iamyukino.github.io/index/wp-includes/global/waifu/Samples/TypeScript/Demo/live2d/assets/waifu.css">
+	<script type="text/javascript" src="https://iamyukino.github.io/index/wp-includes/global/js/jquery.min.js"></script>
+</head>
+<body>
+	<!-- live2d -->
+	<div class="waifu">
+		<div class="waifu-tips" style="opacity: 1;"><span style="color:#0099cc;"></span></div>
+		<canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+		<div class="waifu-tool">
+			<span class="fui-home"></span>
+			<span class="fui-chat"></span>
+			<span class="fui-eye"></span>
+			<span class="fui-user"></span>
+			<span class="fui-photo"></span>
+			<span class="fui-info-circle"></span>
+			<span class="fui-cross"></span>
+		</div>
+	</div>
+	<!-- Live2DCubismCore script -->
+	<script src="https://iamyukino.github.io/index/wp-includes/global/waifu/Core/live2dcubismcore.js"></script>
+	<!-- Build script -->
+	<script src="https://iamyukino.github.io/index/wp-includes/global/waifu/Samples/TypeScript/Demo/dist/meidou_live2d.js"></script>
+	<!-- screenshot -->
+	<script src="https://iamyukino.github.io/index/wp-includes/global/waifu/Samples/TypeScript/Demo/live2d/assets/html2canvas.js"></script>
+	<!-- 言うこと -->
+	<script src="https://iamyukino.github.io/index/wp-includes/global/waifu/Samples/TypeScript/Demo/live2d/assets/waifu-tips.js"></script>
+	<!-- アドレスを変更すると、自分のモデルファイルをロードできます。ファイル内にMocMapper.jsonを新規作成する必要があります。 -->
+	<!-- https://iamyukino.github.io/index/wp-content/global/waifu/TaoHua/mapper.json -->
+	<script type="text/javascript">
+		let modulesPath = "https://iamyukino.github.io/index/wp-content/global/waifu/"
+		let modelNames = ['TaoHua'] /* 既存のモデル「Orangesweet2.1」「mia1」「live2d_free1.1」「Hiyori」の追加を選択可能。*/
+		let waifuTipsUrl = "https://iamyukino.github.io/index/wp-includes/global/waifu/Samples/TypeScript/Demo/live2d/assets/waifu-tips.json"
+		initModel(modulesPath, modelNames, waifuTipsUrl);
+	</script>
+</body>
+</html>
