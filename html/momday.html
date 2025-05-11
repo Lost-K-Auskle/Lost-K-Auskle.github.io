@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>母亲节爱心祝福</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        #matrix-canvas, #heart-canvas {
+            position: absolute;
+            left: 0; top: 0;
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            pointer-events: none;
+        }
+        #heart-text {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 2.2em;
+            font-weight: bold;
+            text-align: center;
+            z-index: 10;
+            white-space: nowrap;
+            text-shadow: 0 0 8px #e05297, 0 0 16px #fff;
+            letter-spacing: 2px;
+        }
+        .heart-emoji {
+            color: #e05297;
+            font-size: 1.2em;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-canvas"></canvas>
+    <canvas id="heart-canvas"></canvas>
+    <div id="heart-text">
+        <span class="heart-emoji">❤</span>
+        祝老妈母亲节快乐！
+        <span class="heart-emoji">❤</span>
+    </div>
+    // ... existing code ...
+    <script>
+    // 窗口自适应
+    function resizeCanvas(canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    // 1. 小爱心雨
+    const matrixCanvas = document.getElementById('matrix-canvas');
+    const ctxMatrix = matrixCanvas.getContext('2d');
+    const fontSize = 22;
+    let columns, drops;
+    function initMatrix() {
+        resizeCanvas(matrixCanvas);
+        columns = Math.floor(window.innerWidth / fontSize);
+        drops = [];
+        for (let i = 0; i < columns; i++) drops[i] = Math.random() * window.innerHeight / fontSize;
+    }
+    function drawMatrix() {
+        ctxMatrix.fillStyle = 'rgba(0,0,0,0.15)';
+        ctxMatrix.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+        ctxMatrix.font = fontSize + "px monospace";
+        ctxMatrix.fillStyle = "#e05297";
+        for (let i = 0; i < columns; i++) {
+            const text = "❤";
+            ctxMatrix.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        }
+        requestAnimationFrame(drawMatrix);
+    }
+    window.addEventListener('resize', initMatrix);
+    initMatrix();
+    drawMatrix();
+
+
+    // 2. 爱心粒子
+    const heartCanvas = document.getElementById('heart-canvas');
+    const ctxHeart = heartCanvas.getContext('2d');
+    function resizeHeart() {
+        resizeCanvas(heartCanvas);
+    }
+    window.addEventListener('resize', resizeHeart);
+    resizeHeart();
+
+    // 粒子参数
+    const heartParticles = [];
+    const heartParticleCount = 400;
+    function heartFunc(t, scale, offsetX, offsetY) {
+        // 心形参数方程
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+        return {
+            x: offsetX + x * scale,
+            y: offsetY - y * scale
+        };
+    }
+    function initHeartParticles() {
+        heartParticles.length = 0;
+        // 居中
+        const scale = Math.min(window.innerWidth, window.innerHeight) / 32;
+        const offsetX = window.innerWidth / 2;
+        const offsetY = window.innerHeight / 2;
+        for (let i = 0; i < heartParticleCount; i++) {
+            const t = (Math.PI * 2) * (i / heartParticleCount);
+            const pos = heartFunc(t, scale, offsetX, offsetY);
+            heartParticles.push({
+                baseT: t,
+                t: t + Math.random() * 0.5,
+                size: Math.random() * 5 + 3,
+                alpha: Math.random() * 0.5 + 0.5,
+                speed: Math.random() * 0.01 + 0.008,
+                offset: Math.random() * Math.PI * 2,
+                scale: scale,
+                offsetX: offsetX,
+                offsetY: offsetY
+            });
+        }
+    }
+    function drawHeart() {
+        ctxHeart.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
+        for (let p of heartParticles) {
+            // 粒子沿心形轨迹微微跳动
+            p.t += p.speed;
+            const t = p.baseT + Math.sin(p.t + p.offset) * 0.2;
+            const pos = heartFunc(t, p.scale, p.offsetX, p.offsetY);
+            ctxHeart.globalAlpha = p.alpha;
+            ctxHeart.beginPath();
+            ctxHeart.arc(pos.x, pos.y, p.size, 0, Math.PI * 2);
+            ctxHeart.fillStyle = "#e05297";
+            ctxHeart.shadowColor = "#e05297";
+            ctxHeart.shadowBlur = 12;
+            ctxHeart.fill();
+        }
+        ctxHeart.globalAlpha = 1;
+        requestAnimationFrame(drawHeart);
+    }
+    window.addEventListener('resize', () => {
+        initMatrix();
+        resizeHeart();
+        initHeartParticles();
+    });
+    initHeartParticles();
+    drawHeart();
+    </script>
+</body>
+</html>

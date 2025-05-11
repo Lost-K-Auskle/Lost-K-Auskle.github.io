@@ -9,7 +9,47 @@
 </head>
 <body>
     <h1>歪比巴卜</h1>
+	<!-- 母亲节快乐祝福和动态爱心 -->
+    <div id="mothers-day-container" style="text-align:center;margin:40px 0;">
+        <h2 style="color:#e05297;font-size:2.2em;">祝妈妈母亲节快乐！</h2>
+        <div class="heart"></div>
+    </div>
 
+    <style>
+    .heart {
+        width: 100px;
+        height: 90px;
+        position: relative;
+        margin: 0 auto;
+        animation: heartbeat 1s infinite;
+    }
+    .heart:before,
+    .heart:after {
+        content: "";
+        position: absolute;
+        left: 50px;
+        top: 0;
+        width: 50px;
+        height: 80px;
+        background: #e05297;
+        border-radius: 50px 50px 0 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+    }
+    .heart:after {
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+    }
+    @keyframes heartbeat {
+        0%, 100% { transform: scale(1);}
+        10% { transform: scale(1.1);}
+        20% { transform: scale(0.95);}
+        30% { transform: scale(1.05);}
+        40% { transform: scale(0.97);}
+        50% { transform: scale(1);}
+    }
+    </style>
 
 <!-- live2d -->
 	<div class="waifu">
